@@ -1,0 +1,16 @@
+// {
+//   "logoPosition": "right",
+//   "pages": [
+//     {
+//       "name": "page1",
+//       "elements": [
+//         {
+//           "type": "text",
+//           "name": "question1"
+//         }
+//       ]
+//     }
+//   ],
+//   "region": "Asia",
+//   "country": "CHN"
+// }

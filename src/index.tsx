@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './example2';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <App
+    // onChangeContent={(content) => {
+    //   console.log(new Date(), '________------------>>>>>>>>>>content', content);
+    // }}
+    />
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
