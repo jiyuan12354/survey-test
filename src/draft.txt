@@ -1,0 +1,103 @@
+https://surveyjs.io/survey-creator/documentation/get-started-react
+
+import { SurveyCreator } from "survey-creator-react";
+import "survey-core/defaultV2.min.css";
+import "survey-creator-core/survey-creator-core.min.css";
+
+const creatorOptions = {
+  showLogicTab: true,
+  isAutoSave: true
+};
+
+export function SurveyCreatorWidget() {
+  const creator = new SurveyCreator(creatorOptions);
+  return (
+
+  )
+}
+
+export function SurveyCreatorWidget() {
+  // ...
+  creator.saveSurveyFunc = (saveNo, callback) => { 
+    // If you use localStorage:
+    window.localStorage.setItem("survey-json", creator.text);
+    callback(saveNo, true);
+
+    // If you use a web service:
+    saveSurveyJson(
+        "https://your-web-service.com/",c
+        creator.JSON,
+        saveNo,
+        callback
+    );
+  };
+  // ...
+}
+
+// If you use a web service:
+function saveSurveyJson(url, json, saveNo, callback) {
+  const request = new XMLHttpRequest();
+  request.open('POST', url);
+  request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+  request.addEventListener('load', () => {
+      callback(saveNo, true);
+  });
+  request.addEventListener('error', () => {
+      callback(saveNo, false);
+  });
+  request.send(JSON.stringify(json));
+}
+
+https://surveyjs.io/survey-creator/documentation/property-grid
+addProperty并指定type/指定类型
+Survey.Serializer.addProperty("dropdown", 
+  { name: "myStringProperty", default: "custom-default-value" }
+);
+
+Survey.Serializer.addProperty("checkbox", 
+  { name: "myNumericProperty", type: "number", default: 100 }
+);
+
+Survey.Serializer.addProperty("question", 
+  { name: "myBooleanProperty", type: "boolean", default: true }
+);
+------------------------------------------------------------------------
+// Define `choices` locally
+Survey.Serializer.addProperty("question", {
+  name: "myStringProperty",
+  choices: [ "option1", "option2", "option3" ],
+  // If item captions should be different from item values:
+  // choices: [
+  //   { value: "option1", text: "Option 1" },
+  //   { value: "option2", text: "Option 2" },
+  //   { value: "option3", text: "Option 3" },
+  // ],
+  default: "option1"
+});
+
+// Load `choices` from a web service
+Survey.Serializer.addProperty("survey", {
+  name: "country",
+  category: "general",
+  choices: function (obj, choicesCallback) {
+    const xhr = new XMLHttpRequest(); 
+    xhr.open("GET", "https://surveyjs.io/api/CountriesExample");
+    xhr.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.response);
+        const result = [];
+        // Make the property nullable
+        result.push({ value: null });
+        // Web service returns objects that are converted to the `{ value, text }` format
+        // If your web service returns an array of strings, pass this array to `choicesCallback`
+        response.forEach(item => {
+          result.push({ value: item.cioc, text: item.name });
+        });
+        choicesCallback(result);
+      }
+    };
+    xhr.send();
+  }
+});
+-----------------------------------------------------------------------------

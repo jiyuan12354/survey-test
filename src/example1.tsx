@@ -25,6 +25,8 @@ PropertyGridEditorCollection.register({
     return { type: 'text', maxLength: 5 };
   },
 });
+
+// 然后在调查问卷编辑器中可以使用这个新的属性
 function SurveyCreatorRenderComponent() {
   const options = {
     showLogicTab: true,
